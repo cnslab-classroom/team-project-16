@@ -6,32 +6,64 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <Button
-        android:id="@+id/selectBookButton"
+    <TextView
+        android:id="@+id/today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="책 선택" />
+        android:textSize="30sp"
+        android:layout_above="@+id/calendarView"
+        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:id="@+id/readingScheduleButton"
+    <CalendarView
+        android:id="@+id/calendarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="독서 계획" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:id="@+id/completeListButton"
-        android:layout_width="wrap_content"
+    <GridLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="도서 완독 목록" />
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp">
 
-    <Button
-        android:id="@+id/reviewButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="독후감 작성" />
+        <Button
+            android:id="@+id/selectBookButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="책 선택"
+            android:layout_margin="8dp" />
+
+        <Button
+            android:id="@+id/readingScheduleButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="독서 계획"
+            android:layout_margin="8dp" />
+
+        <Button
+            android:id="@+id/completeListButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="도서 완독 목록"
+            android:layout_margin="8dp" />
+
+        <Button
+            android:id="@+id/reviewButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="독후감 작성"
+            android:layout_margin="8dp" />
+    </GridLayout>
 
 </LinearLayout>

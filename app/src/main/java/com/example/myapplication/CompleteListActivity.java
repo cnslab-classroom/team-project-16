@@ -1,4 +1,16 @@
 package com.example.myapplication;
 
-public class CompleteListActivity {
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class CompleteListActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.complete_list);
+        setTitle("완독 독서 목록");
+
+
+    }
 }
