@@ -19,7 +19,10 @@ public interface NoteDao {
     @Delete
     void delete(Note note);
 
-    @Query("SELECT * FROM note_table ORDER BY id DESC")
+    @Query("SELECT * FROM note_table WHERE id = :noteId LIMIT 1")
+    Note getNoteById(long noteId);
+
+    @Query("SELECT * FROM note_table")
     List<Note> getAllNotes();
 }
 

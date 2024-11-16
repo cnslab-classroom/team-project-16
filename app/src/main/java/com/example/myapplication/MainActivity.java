@@ -23,16 +23,16 @@ public class MainActivity extends AppCompatActivity {
 
         todayTextView.setText(currentDate);
 
-        Button selectBookButton = (Button) findViewById(R.id.selectBookButton);
+        Button searchBookButton = (Button) findViewById(R.id.searchBookButton);
         Button readingScheduleButton = (Button) findViewById(R.id.readingScheduleButton);
         Button completeListButton = (Button) findViewById(R.id.completeListButton);
         Button reviewButton = (Button) findViewById(R.id.reviewButton);
 
-        selectBookButton.setOnClickListener(new View.OnClickListener() {
+        searchBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentSelectBookActivity = new Intent(getApplicationContext(),SelectBookActivity.class);
-                //startActivity();
+                Intent intentSearchBookActivity = new Intent(getApplicationContext(),SearchBookActivity.class);
+                //startActivity(intentSearchBookActivity);
             }
         });
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentReadingScheduleActivity = new Intent(getApplicationContext(),ReadingScheduleActivity.class);
-                //startActivity();
+                //startActivity(intentReadingScheduleActivity);
             }
         });
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentCompleteListActivity = new Intent(getApplicationContext(),CompleteListActivity.class);
-                //startActivity();
+                startActivity(intentCompleteListActivity);
             }
         });
 

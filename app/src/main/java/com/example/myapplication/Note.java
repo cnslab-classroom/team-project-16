@@ -8,12 +8,14 @@ public class Note {
     @PrimaryKey(autoGenerate = true)
     private long id;
     private String title;
+    private String author;
     private String content;
     private long date;
 
     // 생성자, getter, setter
-    public Note(String title, String content, long date) {
+    public Note(String title, String author, String content, long date) {
         this.title = title;
+        this.author = author;
         this.content = content;
         this.date = date;
     }
@@ -32,6 +34,14 @@ public class Note {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String subtitle) {
+        this.author = author;
     }
 
     public String getContent() {
