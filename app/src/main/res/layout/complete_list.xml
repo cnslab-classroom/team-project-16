@@ -5,12 +5,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <Button
-        android:id="@+id/button_add_note"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="임시 버튼" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/completeRecyclerList"
         android:layout_width="match_parent"

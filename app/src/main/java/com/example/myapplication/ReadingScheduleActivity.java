@@ -9,7 +9,7 @@ public class ReadingScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedular_registration);
-        setTitle("도서 스케줄러");
+        setTitle("독서 계획");
 
 
     }

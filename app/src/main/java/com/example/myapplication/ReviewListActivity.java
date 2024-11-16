@@ -39,6 +39,7 @@ public class ReviewListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_list);
+        getSupportActionBar().hide();
 
         // 데이터베이스 및 DAO 초기화
         noteDatabase = NoteDatabase.getInstance(this);

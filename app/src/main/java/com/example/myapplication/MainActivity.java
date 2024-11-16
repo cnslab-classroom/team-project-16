@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         TextView todayTextView = findViewById(R.id.today);
 
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentSearchBookActivity = new Intent(getApplicationContext(),SearchBookActivity.class);
-                //startActivity(intentSearchBookActivity);
+                startActivity(intentSearchBookActivity);
             }
         });
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentReadingScheduleActivity = new Intent(getApplicationContext(),ReadingScheduleActivity.class);
-                //startActivity(intentReadingScheduleActivity);
+                startActivity(intentReadingScheduleActivity);
             }
         });
 

@@ -9,7 +9,7 @@ public class CompleteListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.complete_list);
-        setTitle("완독 독서 목록");
+        setTitle("도서 완독 목록");
 
 
     }
