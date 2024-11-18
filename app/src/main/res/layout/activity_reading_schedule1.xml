@@ -26,7 +26,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/title"/>
+                android:id="@+id/titleInput"/>
         </TableRow>
 
         <TableRow>
@@ -39,7 +39,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/author"/>
+                android:id="@+id/authorInput"/>
         </TableRow>
         <TableRow>
             <TextView
@@ -51,7 +51,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/publisher"/>
+                android:id="@+id/publisherInput"/>
         </TableRow>
         <TableRow>
             <TextView
@@ -63,7 +63,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/page"/>
+                android:id="@+id/totalPagesInput"/>
         </TableRow>
     </TableLayout>
 
@@ -74,16 +74,32 @@
         android:orientation="horizontal"
         android:layout_marginBottom="16dp">
 
+        <!--
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:textSize="20dp"
-            android:id="@+id/start_month"/>
+            android:id="@+id/startYearSpinner"/>
+
+        <Spinner
+            android:id="@+id/startMonthSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="20dp" />
+
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:textSize="20dp"
-            android:id="@+id/start_date"/>
+            android:id="@+id/startDateSpinner"/>
+            -->
+
+        <Spinner
+            android:id="@+id/startDateSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,17 +111,28 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="80dp">
-
+        <!--
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:textSize="20dp"
-            android:id="@+id/end_month"/>
+            android:id="@+id/endYearSpinner"/>
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:textSize="20dp"
-            android:id="@+id/end_date"/>
+            android:id="@+id/endMonthSpinner"/>
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="20dp"
+            android:id="@+id/endDateSpinner"/>
+        -->
+        <Spinner
+            android:id="@+id/endDateSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,5 +144,5 @@
         android:layout_height="wrap_content"
         android:text="시작하기"
         android:textSize="20dp"
-        android:id="@+id/start_button"/>
+        android:id="@+id/startButton"/>
 </LinearLayout>

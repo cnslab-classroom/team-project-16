@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         readingScheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentReadingScheduleActivity = new Intent(getApplicationContext(),ReadingScheduleActivity.class);
+                Intent intentReadingScheduleActivity = new Intent(getApplicationContext(),ReadingScheduleActivity1.class);
                 startActivity(intentReadingScheduleActivity);
             }
         });
