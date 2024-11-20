@@ -17,38 +17,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="오늘은 0월 0일 입니다."
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:id="@+id/todayTv"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="책 제목 : 000"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:id="@+id/titleTv"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="오늘의 목표량 : 00쪽"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:id="@+id/goalTv"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="남은 기간 : 0일"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:id="@+id/leftDayTv"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="남은 쪽수 : 00쪽"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:id="@+id/leftPageTv"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="도전은 0월 0일에 종료됩니다."
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:id="@+id/endDayTv"/>
     </LinearLayout>
 
     <LinearLayout

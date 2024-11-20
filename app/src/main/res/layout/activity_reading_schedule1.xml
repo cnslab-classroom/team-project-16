@@ -67,78 +67,74 @@
         </TableRow>
     </TableLayout>
 
-
-    <LinearLayout
+    <TextView
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" 시작날짜"
+        android:textSize="20dp"
+        android:layout_gravity="left"/>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="16dp">
 
-        <!--
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="40dp"
             android:textSize="20dp"
             android:id="@+id/startYearSpinner"/>
 
         <Spinner
-            android:id="@+id/startMonthSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:textSize="20dp" />
-
-        <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="40dp"
             android:textSize="20dp"
-            android:id="@+id/startDateSpinner"/>
-            -->
+            android:id="@+id/startMonthSpinner"/>
 
         <Spinner
-            android:id="@+id/startDateSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:spinnerMode="dropdown" />
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:textSize="20dp"
+            android:id="@+id/startDaySpinner"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="부터"
-            android:textSize="20dp"/>
     </LinearLayout>
-    <LinearLayout
+
+    <TextView
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" 종료날짜"
+        android:textSize="20dp"
+        android:layout_gravity="left"/>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="80dp">
-        <!--
+
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="40dp"
             android:textSize="20dp"
             android:id="@+id/endYearSpinner"/>
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="40dp"
             android:textSize="20dp"
             android:id="@+id/endMonthSpinner"/>
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="40dp"
             android:textSize="20dp"
-            android:id="@+id/endDateSpinner"/>
-        -->
-        <Spinner
-            android:id="@+id/endDateSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:spinnerMode="dropdown" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="까지"
-            android:textSize="20dp"/>
+            android:id="@+id/endDaySpinner"/>
+
     </LinearLayout>
+
     <Button
         android:layout_width="200dp"
         android:layout_height="wrap_content"

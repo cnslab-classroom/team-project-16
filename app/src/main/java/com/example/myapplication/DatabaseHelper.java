@@ -1,6 +1,10 @@
+
 package com.example.myapplication;
 
+import static androidx.room.RoomMasterTable.TABLE_NAME;
+
 import android.content.*;
+import android.database.Cursor;
 import android.database.sqlite.*;
 
 import java.time.LocalDate;
@@ -10,7 +14,7 @@ import java.time.temporal.ChronoUnit;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "ReadingPlanner.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     // Table and columns
     public static final String TABLE_BOOKS = "Books";
@@ -44,12 +48,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createTable);
     }
 
-    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 2) {
-            db.execSQL("ALTER TABLE " + TABLE_BOOKS + " ADD COLUMN " + COLUMN_AUTHOR + " TEXT");
-            db.execSQL("ALTER TABLE " + TABLE_BOOKS + " ADD COLUMN " + COLUMN_PUBLISHER + " TEXT");
-        }
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
     }
 
     // Insert book
@@ -81,6 +82,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         LocalDate start = LocalDate.parse(startDate, formatter);
         LocalDate end = LocalDate.parse(endDate, formatter);
         return (int) ChronoUnit.DAYS.between(start, end) + 1;
+    }
+
+    public Cursor getAllBooks() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_NAME, null, null, null, null, null, null);
     }
 }
 
