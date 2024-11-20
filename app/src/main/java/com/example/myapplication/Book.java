@@ -4,6 +4,8 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.ColumnInfo;
 
+import java.time.LocalDate;
+
 @Entity(tableName = "book_table")
 public class Book {
     @PrimaryKey(autoGenerate = true)
@@ -13,35 +15,47 @@ public class Book {
     private String bookAuthor;
     private String publisher;
     private int pageCount;
+    private int pagesRead;
+    private int period;
 
     @ColumnInfo(name = "start_date")
-    private String startDate;
+    private LocalDate startDate;
 
     @ColumnInfo(name = "end_date")
-    private String endDate;
+    private LocalDate endDate;
 
-    public Book(String bookTitle, String bookAuthor, String publisher, int pageCount, String startDate, String endDate) {
+    public Book(String bookTitle, String bookAuthor, String publisher, int pageCount, LocalDate startDate, LocalDate endDate, int period) {
         this.bookTitle = bookTitle;
         this.bookAuthor = bookAuthor;
         this.publisher = publisher;
         this.pageCount = pageCount;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.period = period;
+        this.pagesRead = 0;
     }
 
-    public String getTitle() {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getBookTitle() {
         return bookTitle;
     }
 
-    public void setTitle(String bookTitle) {
+    public void setBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
     }
 
-    public String getAuthor() {
+    public String getBookAuthor() {
         return bookAuthor;
     }
 
-    public void setAuthor(String bookAuthor) {
+    public void setBookAuthor(String bookAuthor) {
         this.bookAuthor = bookAuthor;
     }
 
@@ -61,19 +75,35 @@ public class Book {
         this.pageCount = pageCount;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public int getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(int period) {
+        this.period = period;
+    }
+
+    public int getPagesRead() {
+        return pagesRead;
+    }
+
+    public void setPagesRead(int pagesRead) {
+        this.pagesRead = pagesRead;
     }
 }

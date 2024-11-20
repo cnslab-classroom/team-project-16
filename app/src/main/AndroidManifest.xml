@@ -35,7 +35,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SearchBookActivity" />
-        <activity android:name=".ReadingScheduleActivity" />
+        <activity android:name=".RegisterBook" />
+        <activity android:name=".ReadingSchedule" />
         <activity android:name=".CompleteListActivity" />
         <activity android:name=".ReviewListActivity" />
         <activity android:name=".AddReviewActivity" />

@@ -3,7 +3,7 @@ package com.example.myapplication;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "note_table")  // 테이블 이름이 "note_table"로 설정되어 있어야 합니다.
+@Entity(tableName = "note_table")
 public class Note {
     @PrimaryKey(autoGenerate = true)
     private long id;

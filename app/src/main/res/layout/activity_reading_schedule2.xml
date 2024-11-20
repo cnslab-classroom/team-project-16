@@ -68,6 +68,7 @@
             android:layout_height="wrap_content"
             android:text="오늘 읽은 쪽수 :"
             android:textSize="20dp" />
+
         <EditText
             android:layout_width="100dp"
             android:layout_height="wrap_content"
