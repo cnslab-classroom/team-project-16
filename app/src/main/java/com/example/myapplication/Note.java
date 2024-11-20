@@ -12,7 +12,6 @@ public class Note {
     private String content;
     private long date;
 
-    // 생성자, getter, setter
     public Note(String title, String author, String content, long date) {
         this.title = title;
         this.author = author;
