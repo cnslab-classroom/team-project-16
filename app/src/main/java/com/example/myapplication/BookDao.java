@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -25,4 +26,19 @@ public interface BookDao {
 
     @Query("SELECT * FROM book_table")
     List<Book> getAllBooks();
+
+    @Query("SELECT COUNT(*) FROM book_table")
+    LiveData<Integer> countBooks();
+
+    @Query("SELECT completedToday FROM book_table WHERE id = :bookId")
+    LiveData<Boolean> getCompletedToday(int bookId);
+
+    @Query("SELECT completedToday FROM book_table WHERE id = :bookId")
+    boolean isCompletedToday(long bookId);
+
+    @Query("UPDATE book_table SET completedToday = :completed WHERE id = :id")
+    void updateCompletedToday(int id, boolean completed); // 읽기 상태 업데이트
+
+    @Update
+    void updateBook(Book book);
 }

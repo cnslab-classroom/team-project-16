@@ -98,7 +98,7 @@ public class RegisterBook extends AppCompatActivity {
 
             int period = (int) ChronoUnit.DAYS.between(LocalDate.now(), endDate);
 
-            if (period <= 0) {
+            if (period < 0) {
                 Toast.makeText(this, "종료 날짜가 현재보다 이전입니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -114,7 +114,7 @@ public class RegisterBook extends AppCompatActivity {
                 return;
             }
 
-            Book book = new Book(bookTitle, bookAuthor, publisher, pageCount, startDate, endDate, period);
+            Book book = new Book(bookTitle, bookAuthor, publisher, pageCount, startDate, endDate, period + 1);
 
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.execute(() -> {

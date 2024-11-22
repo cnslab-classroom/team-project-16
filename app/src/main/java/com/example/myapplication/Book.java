@@ -24,6 +24,10 @@ public class Book {
     @ColumnInfo(name = "end_date")
     private LocalDate endDate;
 
+    // 추가된 필드
+    private boolean completedToday;
+
+
     public Book(String bookTitle, String bookAuthor, String publisher, int pageCount, LocalDate startDate, LocalDate endDate, int period) {
         this.bookTitle = bookTitle;
         this.bookAuthor = bookAuthor;
@@ -33,6 +37,15 @@ public class Book {
         this.endDate = endDate;
         this.period = period;
         this.pagesRead = 0;
+        this.completedToday = false;
+    }
+
+    public boolean isCompletedToday() {
+        return completedToday;
+    }
+
+    public void setCompletedToday(boolean completedToday) {
+        this.completedToday = completedToday;
     }
 
     public long getId() {

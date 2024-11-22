@@ -32,6 +32,7 @@ public abstract class BookDatabase extends RoomDatabase {
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE book_table ADD COLUMN start_date TEXT DEFAULT NULL");
             database.execSQL("ALTER TABLE book_table ADD COLUMN end_date TEXT DEFAULT NULL");
+            database.execSQL("ALTER TABLE book_table ADD COLUMN completedToday INTEGER DEFAULT 0");
         }
     };
 }

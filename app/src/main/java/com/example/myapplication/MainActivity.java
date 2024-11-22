@@ -1,21 +1,61 @@
 package com.example.myapplication;
 
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import android.view.View;
-import android.widget.Button;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
+
+    private BookViewModel bookViewModel;
+    private boolean bookDBIsEmpty = true, isCompletedRead = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
+
+/*
+        BookDatabase db = Room.databaseBuilder(getApplicationContext(), BookDatabase.class,
+                "book_database").build();
+
+        new Thread(() -> {
+            db.clearAllTables();
+        }).start();
+*/
+
+        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
+
+        // LiveData Observer 등록
+        bookViewModel.isBookDatabaseEmpty().observe(this, isEmpty -> {
+            Log.d("Observer", "isEmpty: " + isEmpty);
+            bookDBIsEmpty = isEmpty != null && isEmpty;
+        });
+
+        bookViewModel.getCompletedToday().observe(this, completedToday -> {
+            Log.d("Observer", "completedToday: " + completedToday);
+            isCompletedRead = completedToday != null && completedToday;
+        });
+
+        // 초기 값 설정
+        bookDBIsEmpty = bookViewModel.isBookDatabaseEmpty().getValue() != null
+                ? bookViewModel.isBookDatabaseEmpty().getValue()
+                : true;
+
+        isCompletedRead = bookViewModel.getCompletedToday().getValue() != null
+                ? bookViewModel.getCompletedToday().getValue()
+                : false;
 
         TextView todayTextView = findViewById(R.id.today);
 
@@ -24,41 +64,58 @@ public class MainActivity extends AppCompatActivity {
 
         todayTextView.setText(currentDate);
 
-        Button searchBookButton = (Button) findViewById(R.id.searchBookButton);
-        Button readingScheduleButton = (Button) findViewById(R.id.readingScheduleButton);
-        Button completeListButton = (Button) findViewById(R.id.completeListButton);
-        Button reviewButton = (Button) findViewById(R.id.reviewButton);
+        Button searchBookButton = findViewById(R.id.searchBookButton);
+        Button readingScheduleButton = findViewById(R.id.readingScheduleButton);
+        Button completeListButton = findViewById(R.id.completeListButton);
+        Button reviewButton = findViewById(R.id.reviewButton);
 
-        searchBookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentSearchBookActivity = new Intent(getApplicationContext(),SearchBookActivity.class);
-                startActivity(intentSearchBookActivity);
-            }
+        WorkScheduler.scheduleDailyTask(getApplicationContext());
+
+        readingScheduleButton.setOnClickListener(view -> {
+            Log.d("Observer", "bookDBIsEmpty: " + bookDBIsEmpty + ", isCompletedRead: " + isCompletedRead);
+
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                List<Book> books = bookViewModel.getBooks(); // DB에서 책 목록 가져오기
+                boolean isAnyBookCompleted = books.stream().anyMatch(Book::isCompletedToday);
+
+                runOnUiThread(() -> {
+                    Intent intentReadingScheduleActivity;
+                    if (bookDBIsEmpty) {
+                        // 데이터베이스가 비어 있는 경우
+                        intentReadingScheduleActivity = new Intent(getApplicationContext(), RegisterBook.class);
+                    } else if (isAnyBookCompleted) {
+                        // 오늘 목표가 완료된 경우
+                        intentReadingScheduleActivity = new Intent(getApplicationContext(), ReadingScheduleActivity3.class);
+                    } else {
+                        // 오늘 목표가 완료되지 않은 경우
+                        intentReadingScheduleActivity = new Intent(getApplicationContext(), ReadingSchedule.class);
+                    }
+                    startActivity(intentReadingScheduleActivity);
+                });
+                executor.shutdown();
+            });
         });
 
-        readingScheduleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentRegisterBook = new Intent(getApplicationContext(),RegisterBook.class);
-                startActivity(intentRegisterBook);
-            }
+        searchBookButton.setOnClickListener(view -> {
+            Intent intentSearchBookActivity = new Intent(getApplicationContext(), SearchBookActivity.class);
+            startActivity(intentSearchBookActivity);
         });
 
-        completeListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentCompleteListActivity = new Intent(getApplicationContext(),CompleteListActivity.class);
-                startActivity(intentCompleteListActivity);
-            }
+        completeListButton.setOnClickListener(view -> {
+            Intent intentCompleteListActivity = new Intent(getApplicationContext(), CompleteListActivity.class);
+            startActivity(intentCompleteListActivity);
         });
 
-        reviewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentReviewListActivity = new Intent(getApplicationContext(),ReviewListActivity.class);
-                startActivity(intentReviewListActivity);
-            }
+        reviewButton.setOnClickListener(view -> {
+            Intent intentReviewListActivity = new Intent(getApplicationContext(), ReviewListActivity.class);
+            startActivity(intentReviewListActivity);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bookViewModel.refreshData();  // 데이터 새로고침
     }
 }

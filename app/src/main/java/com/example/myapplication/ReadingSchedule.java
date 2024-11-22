@@ -1,22 +1,24 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-
-import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class ReadingSchedule extends AppCompatActivity {
     private TextView todayTv, titleTv, goalTv, leftDayTv, leftPageTv, endDayTv;
-    private LocalDate startDate, endDate;
+    private EditText todayPageInput;
+    private Button completeButton;
     private BookDatabase bookDatabase;
+    private Integer todayReadPage;
+    private String currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +32,47 @@ public class ReadingSchedule extends AppCompatActivity {
         leftPageTv = findViewById(R.id.leftPageTv);
         endDayTv = findViewById(R.id.endDayTv);
 
+        todayPageInput = findViewById(R.id.todayPageInput);
+        completeButton = findViewById(R.id.completeButton);
+
         bookDatabase = BookDatabase.getInstance(this);
 
         loadBooksFromDatabase();
+
+        completeButton.setOnClickListener(view -> {
+            String todayPageText = todayPageInput.getText().toString();
+            if (!todayPageText.isEmpty() && todayPageText.matches("[0-9]+")) {
+                todayReadPage = Integer.parseInt(todayPageText);
+
+                // 비동기 작업 처리
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                executor.execute(() -> {
+                    UpdateSchedule();
+
+                    // 화면 전환
+                    runOnUiThread(() -> {
+                        Intent intent = new Intent(ReadingSchedule.this, ReadingScheduleActivity3.class);
+                        startActivity(intent);
+                    });
+                });
+                executor.shutdown();
+            } else {
+                Toast.makeText(ReadingSchedule.this, "올바른 페이지 수를 입력하세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadBooksFromDatabase() {
+        currentDate = LocalDate.now().toString();
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             List<Book> books = bookDatabase.bookDao().getAllBooks();
-
             runOnUiThread(() -> {
                 if (!books.isEmpty()) {
                     Book book = books.get(0);
-
-                    todayTv.setText("오늘은 " + book.getStartDate() + " 입니다.");
+                    todayTv.setText("오늘은 " + currentDate + " 입니다.");
                     titleTv.setText("책 제목 : " + book.getBookTitle());
-                    goalTv.setText("오늘의 목표량 : " + (book.getPageCount() / 2) + "쪽"); // 예시로 1/2 목표
+                    goalTv.setText("오늘의 목표량 : " + (book.getPageCount() / book.getPeriod()) + "쪽");
                     leftDayTv.setText("남은 기간 : " + book.getPeriod() + "일");
                     leftPageTv.setText("남은 쪽수 : " + (book.getPageCount() - book.getPagesRead()) + "쪽");
                     endDayTv.setText("도전은 " + book.getEndDate() + "에 종료됩니다.");
@@ -61,5 +87,22 @@ public class ReadingSchedule extends AppCompatActivity {
             });
             executor.shutdown();
         });
+    }
+
+    private void UpdateSchedule() {
+        List<Book> books = bookDatabase.bookDao().getAllBooks();
+        if (!books.isEmpty()) {
+            Book book = books.get(0);
+            book.setPagesRead(book.getPagesRead() + todayReadPage);  // 누적 페이지 읽기
+            book.setPeriod(book.getPeriod() - 1);  // 남은 기간 갱신
+
+            // 오늘 완료 여부 설정
+            book.setCompletedToday(true);
+
+            // 데이터베이스 업데이트
+            bookDatabase.bookDao().updateBook(book);
+            bookDatabase.bookDao().updateCompletedToday(0, true);
+            Log.d("Observer", "completed: " + book.isCompletedToday());
+        }
     }
 }
