@@ -26,6 +26,7 @@ public class Book {
 
     // 추가된 필드
     private boolean completedToday;
+    private int todayReadPages;
 
 
     public Book(String bookTitle, String bookAuthor, String publisher, int pageCount, LocalDate startDate, LocalDate endDate, int period) {
@@ -38,6 +39,15 @@ public class Book {
         this.period = period;
         this.pagesRead = 0;
         this.completedToday = false;
+        this.todayReadPages = 0;
+    }
+
+    public int getTodayReadPages() {
+        return todayReadPages;
+    }
+
+    public void setTodayReadPages(int todayReadPages) {
+        this.todayReadPages = todayReadPages;
     }
 
     public boolean isCompletedToday() {

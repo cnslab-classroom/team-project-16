@@ -12,22 +12,22 @@
         android:text="책 제목 : 000"
         android:textSize="20dp"
         android:layout_marginBottom="20dp"
-        android:id="@+id/title"/>
+        android:id="@+id/title_end"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="오늘의 목표 달성!"
+        android:text="축하합니다!"
         android:textSize="20dp"
-        android:id="@+id/isSuccess1"/>
+        android:id="@+id/isAllSuccess1"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="이대로 계속해 봅시다!"
+        android:text="독서를 모두 마쳤습니다!"
         android:textSize="20dp"
         android:layout_marginBottom="20dp"
-        android:id="@+id/isSuccess2"/>
+        android:id="@+id/isAllSuccess2"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,22 +35,22 @@
         android:text="오늘 읽은 분량 : 00쪽"
         android:textSize="20dp"
         android:layout_marginBottom="40dp"
-        android:id="@+id/todayRead"/>
+        android:id="@+id/todayRead_end"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="내일 읽을 분량 : 00쪽"
+        android:text="재도전"
         android:textSize="20dp"
-        android:layout_marginBottom="40dp"
-        android:id="@+id/tomorrowRead"/>
-
+        android:visibility="invisible"
+        android:clickable="false"
+        android:id="@+id/retryBtn_end"/>
     <Button
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="메인화면으로"
         android:textSize="20dp"
-        android:id="@+id/mainBotton"/>
+        android:id="@+id/mainBtn_end"/>
 
 
 </LinearLayout>

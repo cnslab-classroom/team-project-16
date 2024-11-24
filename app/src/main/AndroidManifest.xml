@@ -17,13 +17,16 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".ReadingScheduleActivity3"
+            android:name=".ReadingScheduleActivity4"
             android:exported="false" />
         <activity
-            android:name=".ReadingScheduleActivity2"
+            android:name=".TodayReadingEnd"
             android:exported="false" />
         <activity
-            android:name=".ReadingScheduleActivity1"
+            android:name=".ReadingSchedule"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterBook"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -35,8 +38,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".SearchBookActivity" />
-        <activity android:name=".RegisterBook" />
-        <activity android:name=".ReadingSchedule" />
         <activity android:name=".CompleteListActivity" />
         <activity android:name=".ReviewListActivity" />
         <activity android:name=".AddReviewActivity" />

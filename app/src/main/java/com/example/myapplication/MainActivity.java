@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                         intentReadingScheduleActivity = new Intent(getApplicationContext(), RegisterBook.class);
                     } else if (isAnyBookCompleted) {
                         // 오늘 목표가 완료된 경우
-                        intentReadingScheduleActivity = new Intent(getApplicationContext(), ReadingScheduleActivity3.class);
+                        intentReadingScheduleActivity = new Intent(getApplicationContext(), TodayReadingEnd.class);
                     } else {
                         // 오늘 목표가 완료되지 않은 경우
                         intentReadingScheduleActivity = new Intent(getApplicationContext(), ReadingSchedule.class);

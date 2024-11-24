@@ -41,4 +41,10 @@ public interface BookDao {
 
     @Update
     void updateBook(Book book);
+
+    @Query("UPDATE book_table SET todayReadPages = :todayReadPages WHERE id = :bookId")
+    void updateTodayReadPages(long bookId, int todayReadPages);
+
+    @Query("SELECT todayReadPages FROM book_table WHERE id = :bookId")
+    int getTodayReadPages(long bookId);
 }

@@ -19,6 +19,7 @@ public class ReadingSchedule extends AppCompatActivity {
     private BookDatabase bookDatabase;
     private Integer todayReadPage;
     private String currentDate;
+    private Boolean isReadingEnd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +52,13 @@ public class ReadingSchedule extends AppCompatActivity {
 
                     // 화면 전환
                     runOnUiThread(() -> {
-                        Intent intent = new Intent(ReadingSchedule.this, ReadingScheduleActivity3.class);
-                        startActivity(intent);
+                        if(isReadingEnd){
+                            Intent intent = new Intent(ReadingSchedule.this, ReadingScheduleActivity4.class);
+                            startActivity(intent);
+                        }else{
+                            Intent intent = new Intent(ReadingSchedule.this, TodayReadingEnd.class);
+                            startActivity(intent);
+                        }
                     });
                 });
                 executor.shutdown();
@@ -72,7 +78,7 @@ public class ReadingSchedule extends AppCompatActivity {
                     Book book = books.get(0);
                     todayTv.setText("오늘은 " + currentDate + " 입니다.");
                     titleTv.setText("책 제목 : " + book.getBookTitle());
-                    goalTv.setText("오늘의 목표량 : " + (book.getPageCount() / book.getPeriod()) + "쪽");
+                    goalTv.setText("오늘의 목표량 : " + ((book.getPageCount() - book.getPagesRead()) / book.getPeriod()) + "쪽");
                     leftDayTv.setText("남은 기간 : " + book.getPeriod() + "일");
                     leftPageTv.setText("남은 쪽수 : " + (book.getPageCount() - book.getPagesRead()) + "쪽");
                     endDayTv.setText("도전은 " + book.getEndDate() + "에 종료됩니다.");
@@ -93,11 +99,21 @@ public class ReadingSchedule extends AppCompatActivity {
         List<Book> books = bookDatabase.bookDao().getAllBooks();
         if (!books.isEmpty()) {
             Book book = books.get(0);
-            book.setPagesRead(book.getPagesRead() + todayReadPage);  // 누적 페이지 읽기
-            book.setPeriod(book.getPeriod() - 1);  // 남은 기간 갱신
+
+            int pagesReadNew = book.getPagesRead() + todayReadPage;
+            int leftDayNew = book.getPeriod() - 1;
+
+            book.setPagesRead(pagesReadNew);  // 누적 페이지 읽기
+            book.setTodayReadPages(todayReadPage); //오늘 읽은 분량 저장
+            book.setPeriod(leftDayNew);  // 남은 기간 갱신
 
             // 오늘 완료 여부 설정
             book.setCompletedToday(true);
+
+            if(pagesReadNew >= book.getPageCount() || leftDayNew<=0)
+                isReadingEnd = true;
+            else
+                isReadingEnd = false;
 
             // 데이터베이스 업데이트
             bookDatabase.bookDao().updateBook(book);
