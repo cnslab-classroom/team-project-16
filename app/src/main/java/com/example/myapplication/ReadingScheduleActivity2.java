@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ReadingSchedule extends AppCompatActivity {
+public class ReadingScheduleActivity2 extends AppCompatActivity {
     private TextView todayTv, titleTv, goalTv, leftDayTv, leftPageTv, endDayTv;
     private EditText todayPageInput;
     private Button completeButton;
@@ -52,17 +52,19 @@ public class ReadingSchedule extends AppCompatActivity {
 
                     runOnUiThread(() -> {
                         if(isReadingEnd){
-                            Intent intent = new Intent(ReadingSchedule.this, ReadingScheduleActivity4.class);
+                            Intent intent = new Intent(ReadingScheduleActivity2.this, ReadingScheduleActivity4.class);
                             startActivity(intent);
+                            finish();
                         }else{
-                            Intent intent = new Intent(ReadingSchedule.this, TodayReadingEnd.class);
+                            Intent intent = new Intent(ReadingScheduleActivity2.this, ReadingScheduleActivity3.class);
                             startActivity(intent);
+                            finish();
                         }
                     });
                 });
                 executor.shutdown();
             } else {
-                Toast.makeText(ReadingSchedule.this, "올바른 페이지 수를 입력하세요.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReadingScheduleActivity2.this, "올바른 페이지 수를 입력하세요.", Toast.LENGTH_SHORT).show();
             }
         });
     }

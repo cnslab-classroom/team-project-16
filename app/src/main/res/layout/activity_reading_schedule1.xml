@@ -70,41 +70,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" 시작날짜"
-        android:textSize="20dp"
-        android:layout_gravity="left"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
-
-        <Spinner
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="40dp"
-            android:textSize="20dp"
-            android:id="@+id/startYearSpinner"/>
-
-        <Spinner
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="40dp"
-            android:textSize="20dp"
-            android:id="@+id/startMonthSpinner"/>
-
-        <Spinner
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="40dp"
-            android:textSize="20dp"
-            android:id="@+id/startDaySpinner"/>
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text=" 종료날짜"
         android:textSize="20dp"
         android:layout_gravity="left"/>

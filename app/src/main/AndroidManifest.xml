@@ -21,13 +21,13 @@
             android:name=".ReadingScheduleActivity4"
             android:exported="false" />
         <activity
-            android:name=".TodayReadingEnd"
+            android:name=".ReadingScheduleActivity3"
             android:exported="false" />
         <activity
-            android:name=".ReadingSchedule"
+            android:name=".ReadingScheduleActivity2"
             android:exported="false" />
         <activity
-            android:name=".RegisterBook"
+            android:name=".ReadingScheduleActivity1"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
