@@ -41,7 +41,7 @@ public class ReadingScheduleActivity4 extends AppCompatActivity {
         retryBtn_end.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ReadingScheduleActivity4.this, RegisterBook.class);
+                Intent intent = new Intent(ReadingScheduleActivity4.this, ReadingScheduleActivity1.class);
                 startActivity(intent);
             }
         });
@@ -73,10 +73,10 @@ public class ReadingScheduleActivity4 extends AppCompatActivity {
                         isAllSuccess2.setText("독서를 모두 끝마쳤습니다!");
                         retryBtn_end.setVisibility(View.INVISIBLE);
                         retryBtn_end.setClickable(false);
-
                         saveCompletedBook(book);
                     }
                     todayRead_end.setText("오늘 읽은 분량 : " + book.getTodayReadPages());
+                    deleteBook(book);
                 } else {
                     title_end.setText("책 제목 : 없음");
                     todayRead_end.setText("오늘 읽은 분량 : 없음");
@@ -94,4 +94,13 @@ public class ReadingScheduleActivity4 extends AppCompatActivity {
             executor.shutdown();
         });
     }
+
+    private void deleteBook(Book book) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            bookDatabase.bookDao().delete(book);
+            executor.shutdown();
+        });
+    }
+
 }

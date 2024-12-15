@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class TodayReadingEnd extends AppCompatActivity {
+public class ReadingScheduleActivity3 extends AppCompatActivity {
     private TextView title, isSuccess1, isSuccess2, todayRead, tomorrowRead;
     private Button mainBtn;
     private BookDatabase bookDatabase;
@@ -36,7 +36,7 @@ public class TodayReadingEnd extends AppCompatActivity {
         mainBtn.setOnClickListener(new View.OnClickListener() {
            @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TodayReadingEnd.this, MainActivity.class);
+                Intent intent = new Intent(ReadingScheduleActivity3.this, MainActivity.class);
                 startActivity(intent);
             }
         });
