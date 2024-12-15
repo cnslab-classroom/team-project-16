@@ -50,7 +50,6 @@ public class ReadingSchedule extends AppCompatActivity {
                 executor.execute(() -> {
                     UpdateSchedule();
 
-                    // 화면 전환
                     runOnUiThread(() -> {
                         if(isReadingEnd){
                             Intent intent = new Intent(ReadingSchedule.this, ReadingScheduleActivity4.class);
@@ -103,11 +102,10 @@ public class ReadingSchedule extends AppCompatActivity {
             int pagesReadNew = book.getPagesRead() + todayReadPage;
             int leftDayNew = book.getPeriod() - 1;
 
-            book.setPagesRead(pagesReadNew);  // 누적 페이지 읽기
-            book.setTodayReadPages(todayReadPage); //오늘 읽은 분량 저장
-            book.setPeriod(leftDayNew);  // 남은 기간 갱신
+            book.setPagesRead(pagesReadNew);
+            book.setTodayReadPages(todayReadPage);
+            book.setPeriod(leftDayNew);
 
-            // 오늘 완료 여부 설정
             book.setCompletedToday(true);
 
             if(pagesReadNew >= book.getPageCount() || leftDayNew<=0)
@@ -115,7 +113,6 @@ public class ReadingSchedule extends AppCompatActivity {
             else
                 isReadingEnd = false;
 
-            // 데이터베이스 업데이트
             bookDatabase.bookDao().updateBook(book);
             bookDatabase.bookDao().updateCompletedToday(0, true);
             Log.d("Observer", "completed: " + book.isCompletedToday());

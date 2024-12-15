@@ -93,7 +93,7 @@ public class SearchBookActivity extends AppCompatActivity {
             switch (eventType) {
                 case XmlPullParser.START_TAG:
                     currentTag = parser.getName();
-                    if ("item".equals(currentTag)) { //책 정보 태그
+                    if ("item".equals(currentTag)) {
                         currentBook = new SearchResult("", "", "");
                     }
                     break;
@@ -101,13 +101,13 @@ public class SearchBookActivity extends AppCompatActivity {
                 case XmlPullParser.TEXT:
                     if (currentBook != null && currentTag != null) {
                         switch (currentTag) {
-                            case "title_info": //제목
+                            case "title_info":
                                 currentBook.setTitle(parser.getText());
                                 break;
-                            case "author_info": //저자
+                            case "author_info":
                                 currentBook.setAuthor(parser.getText());
                                 break;
-                            case "pub_info": //출판사
+                            case "pub_info":
                                 currentBook.setPublisher(parser.getText());
                                 break;
                         }
@@ -115,7 +115,7 @@ public class SearchBookActivity extends AppCompatActivity {
                     break;
 
                 case XmlPullParser.END_TAG:
-                    if ("item".equals(parser.getName())) { // 태그 종료
+                    if ("item".equals(parser.getName())) {
                         results.add(currentBook);
                         currentBook = null;
                     }

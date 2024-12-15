@@ -19,14 +19,12 @@ public abstract class BookDatabase extends RoomDatabase {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             BookDatabase.class, "book_database")
-                    .addMigrations(MIGRATION_2_3) // 마이그레이션 추가
-                    //.fallbackToDestructiveMigration() // 필요시 기존 데이터 삭제
+                    .addMigrations(MIGRATION_2_3)
                     .build();
         }
         return instance;
     }
 
-    // 마이그레이션: 기존 데이터베이스 스키마 업데이트
     static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {

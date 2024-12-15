@@ -12,11 +12,14 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import java.time.LocalDate;
+
 public class ReadingScheduleActivity4 extends AppCompatActivity {
 
     private TextView title_end, isAllSuccess1, isAllSuccess2, todayRead_end;
     private Button retryBtn_end, mainBtn_end;
     private BookDatabase bookDatabase;
+    private CompletedBookDatabase completedBookDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,7 @@ public class ReadingScheduleActivity4 extends AppCompatActivity {
         setContentView(R.layout.activity_reading_schedule4);
 
         bookDatabase = BookDatabase.getInstance(this);
+        completedBookDatabase = CompletedBookDatabase.getInstance(this);
 
         title_end = findViewById(R.id.title_end);
         isAllSuccess1 = findViewById(R.id.isAllSuccess1);
@@ -69,6 +73,8 @@ public class ReadingScheduleActivity4 extends AppCompatActivity {
                         isAllSuccess2.setText("독서를 모두 끝마쳤습니다!");
                         retryBtn_end.setVisibility(View.INVISIBLE);
                         retryBtn_end.setClickable(false);
+
+                        saveCompletedBook(book);
                     }
                     todayRead_end.setText("오늘 읽은 분량 : " + book.getTodayReadPages());
                 } else {
@@ -76,6 +82,15 @@ public class ReadingScheduleActivity4 extends AppCompatActivity {
                     todayRead_end.setText("오늘 읽은 분량 : 없음");
                 }
             });
+            executor.shutdown();
+        });
+    }
+
+    private void saveCompletedBook(Book book) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            CompletedBook completedBook = new CompletedBook(book.getBookTitle(), book.getBookAuthor(), LocalDate.now());
+            completedBookDatabase.completedBookDao().insert(completedBook);
             executor.shutdown();
         });
     }

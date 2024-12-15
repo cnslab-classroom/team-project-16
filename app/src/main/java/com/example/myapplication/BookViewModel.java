@@ -23,7 +23,6 @@ public class BookViewModel extends AndroidViewModel {
         BookDatabase bookDatabase = Room.databaseBuilder(application, BookDatabase.class, "book_database").build();
         bookDao = bookDatabase.bookDao();
 
-        // Transformations.map을 사용하여 책 데이터가 비어있는지 확인
         isBookDatabaseEmpty = Transformations.map(bookCountLiveData, count -> count == null || count == 0);
     }
 
@@ -36,28 +35,24 @@ public class BookViewModel extends AndroidViewModel {
     }
 
     public LiveData<Boolean> isCompletedToday(long bookId) {
-        return bookDao.getCompletedToday((int)bookId); // 특정 책의 completedToday 값을 LiveData로 반환
+        return bookDao.getCompletedToday((int)bookId);
     }
 
-    // 책의 읽은 페이지 수와 완료 상태를 갱신하는 메서드
     public void refreshData() {
-        // DB에서 책의 개수를 가져와서 bookCountLiveData를 업데이트
         bookDao.countBooks().observeForever(count -> {
             bookCountLiveData.setValue(count);
         });
 
-        // 완료 여부 상태를 가져와서 completedTodayLiveData를 업데이트
         bookDao.getCompletedToday(0).observeForever(completed -> {
             completedTodayLiveData.setValue(completed != null && completed);
         });
     }
 
-    // 책 목록 가져오기
     public List<Book> getBooks() {
         final List<Book>[] booksHolder = new List[1];
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            booksHolder[0] = bookDao.getAllBooks(); // 책 목록 가져오기
+            booksHolder[0] = bookDao.getAllBooks();
         });
         executor.shutdown();
 

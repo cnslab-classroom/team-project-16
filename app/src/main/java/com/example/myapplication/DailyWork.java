@@ -27,7 +27,6 @@ public class DailyWork extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        // 설정 변경 작업
         updateSettings();
         return Result.success();
     }

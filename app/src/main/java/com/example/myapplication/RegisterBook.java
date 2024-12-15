@@ -137,7 +137,7 @@ public class RegisterBook extends AppCompatActivity {
     private int parsePageCount(String pageCountStr) {
         try {
             int pageCount = Integer.parseInt(pageCountStr);
-            return pageCount > 0 ? pageCount : -1; // 0 이하의 값 방지
+            return pageCount > 0 ? pageCount : -1;
         } catch (NumberFormatException e) {
             return -1;
         }

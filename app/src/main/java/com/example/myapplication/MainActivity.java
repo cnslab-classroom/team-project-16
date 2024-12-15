@@ -26,18 +26,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
-/*
-        BookDatabase db = Room.databaseBuilder(getApplicationContext(), BookDatabase.class,
-                "book_database").build();
-
-        new Thread(() -> {
-            db.clearAllTables();
-        }).start();
-*/
-
         bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
 
-        // LiveData Observer 등록
         bookViewModel.isBookDatabaseEmpty().observe(this, isEmpty -> {
             Log.d("Observer", "isEmpty: " + isEmpty);
             bookDBIsEmpty = isEmpty != null && isEmpty;
@@ -48,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
             isCompletedRead = completedToday != null && completedToday;
         });
 
-        // 초기 값 설정
         bookDBIsEmpty = bookViewModel.isBookDatabaseEmpty().getValue() != null
                 ? bookViewModel.isBookDatabaseEmpty().getValue()
                 : true;
@@ -75,20 +64,18 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Observer", "bookDBIsEmpty: " + bookDBIsEmpty + ", isCompletedRead: " + isCompletedRead);
 
             ExecutorService executor = Executors.newSingleThreadExecutor();
+
             executor.execute(() -> {
-                List<Book> books = bookViewModel.getBooks(); // DB에서 책 목록 가져오기
+                List<Book> books = bookViewModel.getBooks();
                 boolean isAnyBookCompleted = books.stream().anyMatch(Book::isCompletedToday);
 
                 runOnUiThread(() -> {
                     Intent intentReadingScheduleActivity;
                     if (bookDBIsEmpty) {
-                        // 데이터베이스가 비어 있는 경우
                         intentReadingScheduleActivity = new Intent(getApplicationContext(), RegisterBook.class);
                     } else if (isAnyBookCompleted) {
-                        // 오늘 목표가 완료된 경우
                         intentReadingScheduleActivity = new Intent(getApplicationContext(), TodayReadingEnd.class);
                     } else {
-                        // 오늘 목표가 완료되지 않은 경우
                         intentReadingScheduleActivity = new Intent(getApplicationContext(), ReadingSchedule.class);
                     }
                     startActivity(intentReadingScheduleActivity);
@@ -116,6 +103,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        bookViewModel.refreshData();  // 데이터 새로고침
+        bookViewModel.refreshData();
     }
 }

@@ -19,7 +19,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     private List<Note> notes;
     private OnNoteClickListener onNoteClickListener;
     private OnItemClickListener listener;
-    private OnItemDeleteClickListener deleteListener;  // 삭제 클릭 리스너 추가
+    private OnItemDeleteClickListener deleteListener;
 
     public interface OnNoteClickListener {
         void onNoteClick(Note note);
@@ -28,21 +28,20 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public void setOnNoteClickListener(OnNoteClickListener listener) {
         this.onNoteClickListener = listener;
     }
-    // 클릭 리스너 인터페이스 정의
+
     public interface OnItemClickListener {
         void onItemClick(Note note);
     }
 
-    // 삭제 클릭 리스너 인터페이스 정의
     public interface OnItemDeleteClickListener {
-        void onItemDeleteClick(Note note);  // 삭제 버튼 클릭 시 호출
+        void onItemDeleteClick(Note note);
     }
 
     public NoteAdapter(Context context, List<Note> notes, OnItemClickListener listener, OnItemDeleteClickListener deleteListener) {
         this.context = context;
         this.notes = notes;
         this.listener = listener;
-        this.deleteListener = deleteListener;  // 삭제 클릭 리스너 설정
+        this.deleteListener = deleteListener;
     }
 
     @Override
@@ -58,22 +57,19 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         holder.titleTextView.setText(note.getTitle());
         holder.authorTextView.setText(note.getAuthor());
 
-        // 날짜 포맷 변경
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String formattedDate = sdf.format(new Date(note.getDate()));
-        holder.dateTextView.setText(formattedDate);  // 날짜와 시간 표시
+        holder.dateTextView.setText(formattedDate);
 
-        // 항목 클릭 리스너 설정
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onItemClick(note);
             }
         });
 
-        // 삭제 버튼 클릭 리스너 설정
         holder.deleteButton.setOnClickListener(v -> {
             if (deleteListener != null) {
-                deleteListener.onItemDeleteClick(note);  // 삭제 호출
+                deleteListener.onItemDeleteClick(note);
             }
         });
     }
@@ -90,14 +86,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     public static class NoteViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView, authorTextView, dateTextView;
-        Button deleteButton;  // 삭제 버튼 추가
+        Button deleteButton;
 
         public NoteViewHolder(View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.text_view_title);
             authorTextView = itemView.findViewById(R.id.text_view_author);
             dateTextView = itemView.findViewById(R.id.text_view_date);
-            deleteButton = itemView.findViewById(R.id.button_delete_note);  // 삭제 버튼 연결
+            deleteButton = itemView.findViewById(R.id.button_delete_note);
         }
     }
 }
