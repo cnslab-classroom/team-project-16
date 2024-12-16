@@ -25,6 +25,7 @@ public class ReadingScheduleActivity4 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_schedule4);
+        setTitle("독서 계획");
 
         bookDatabase = BookDatabase.getInstance(this);
         completedBookDatabase = CompletedBookDatabase.getInstance(this);

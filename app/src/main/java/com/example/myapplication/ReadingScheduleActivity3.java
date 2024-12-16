@@ -21,6 +21,7 @@ public class ReadingScheduleActivity3 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_schedule3);
+        setTitle("독서 계획");
 
         title = findViewById(R.id.title);
         isSuccess1 = findViewById(R.id.isSuccess1);

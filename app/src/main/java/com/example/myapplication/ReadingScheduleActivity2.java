@@ -25,6 +25,7 @@ public class ReadingScheduleActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_schedule2);
+        setTitle("독서 계획");
 
         todayTv = findViewById(R.id.todayTv);
         titleTv = findViewById(R.id.titleTv);
