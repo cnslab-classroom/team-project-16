@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,7 +25,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+
+        // 알림 권한 요청 (Android 13 이상)
+        requestNotificationPermission();
+
+        // 알람 설정
+        AlarmHelper.setDailyAlarms(this);
+
+        // 테스트 알람 설정 (5초 후)
+        AlarmHelper.setImmediateTestAlarm(this, "테스트 알람입니다!");
+        Log.d("MainAct", "테스트 알람이 설정되었습니다.");
 
 /*
         BookDatabase db = Room.databaseBuilder(getApplicationContext(), BookDatabase.class,
@@ -117,4 +128,28 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         bookViewModel.refreshData();  // 데이터 새로고침
     }
+
+    private void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1) { // POST_NOTIFICATIONS 요청 코드
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 권한 허용됨
+                Log.d("MainActivity", "알림 권한 허용됨");
+            } else {
+                // 권한 거부됨
+                Log.d("MainActivity", "알림 권한 거부됨");
+            }
+        }
+    }
+
 }
