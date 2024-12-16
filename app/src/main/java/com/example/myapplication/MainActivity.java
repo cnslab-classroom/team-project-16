@@ -16,6 +16,13 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import android.app.AlarmManager;
+import android.app.AppOpsManager;
+import android.content.Context;
+import android.os.Build;
+import android.provider.Settings;
+import android.widget.Toast;
+
 public class MainActivity extends AppCompatActivity {
 
     private BookViewModel bookViewModel;
@@ -25,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        requestExactAlarmPermission();
 
         // 알림 권한 요청 (Android 13 이상)
         requestNotificationPermission();
@@ -130,9 +139,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13 이상
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 101);
             }
         }
     }
@@ -140,16 +150,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 1) { // POST_NOTIFICATIONS 요청 코드
+        if (requestCode == 101) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 권한 허용됨
-                Log.d("MainActivity", "알림 권한 허용됨");
+                Log.d("MainActivity", "알림 권한이 허용되었습니다.");
             } else {
-                // 권한 거부됨
-                Log.d("MainActivity", "알림 권한 거부됨");
+                Log.d("MainActivity", "알림 권한이 거부되었습니다.");
+            }
+        }
+    }
+    // 정확한 알람 권한 확인 및 요청
+    private void requestExactAlarmPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                startActivity(intent);
+            } else {
+                Log.d("MainActivity", "정확한 알람 권한이 이미 허용되었습니다.");
             }
         }
     }
 
 }
+
