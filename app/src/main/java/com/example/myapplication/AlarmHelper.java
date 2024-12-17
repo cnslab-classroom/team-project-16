@@ -43,6 +43,7 @@ public class AlarmHelper {
 
         int requestCode = hour * 100 + minute;
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
+
                 context,
                 requestCode,
                 intent,

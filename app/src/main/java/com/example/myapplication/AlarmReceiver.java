@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat;
 public class AlarmReceiver extends BroadcastReceiver {
     private static final String CHANNEL_ID = "daily_notification_channel";
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
         String notificationText = intent.getStringExtra("message");
