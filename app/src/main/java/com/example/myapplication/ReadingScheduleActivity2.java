@@ -46,7 +46,6 @@ public class ReadingScheduleActivity2 extends AppCompatActivity {
             if (!todayPageText.isEmpty() && todayPageText.matches("[0-9]+")) {
                 todayReadPage = Integer.parseInt(todayPageText);
 
-                // 비동기 작업 처리
                 ExecutorService executor = Executors.newSingleThreadExecutor();
                 executor.execute(() -> {
                     UpdateSchedule();

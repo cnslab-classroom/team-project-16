@@ -36,28 +36,16 @@ public class MainActivity extends AppCompatActivity {
 
         requestExactAlarmPermission();
 
-        // 알림 권한 요청 (Android 13 이상)
         requestNotificationPermission();
 
-        // 알람 설정
         AlarmHelper.setDailyAlarms(this);
 
-        // 테스트 알람 설정 (5초 후)
         AlarmHelper.setImmediateTestAlarm(this, "테스트 알람입니다!");
         Log.d("MainAct", "테스트 알람이 설정되었습니다.");
 
-/*
-        BookDatabase db = Room.databaseBuilder(getApplicationContext(), BookDatabase.class,
-                "book_database").build();
-
-        new Thread(() -> {
-            db.clearAllTables();
-        }).start();
-*/
 
         bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
 
-        // LiveData Observer 등록
         bookViewModel.isBookDatabaseEmpty().observe(this, isEmpty -> {
             Log.d("Observer", "isEmpty: " + isEmpty);
             bookDBIsEmpty = isEmpty != null && isEmpty;
@@ -68,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
             isCompletedRead = completedToday != null && completedToday;
         });
 
-        // 초기 값 설정
         bookDBIsEmpty = bookViewModel.isBookDatabaseEmpty().getValue() != null
                 ? bookViewModel.isBookDatabaseEmpty().getValue()
                 : true;
@@ -96,19 +83,16 @@ public class MainActivity extends AppCompatActivity {
 
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.execute(() -> {
-                List<Book> books = bookViewModel.getBooks(); // DB에서 책 목록 가져오기
+                List<Book> books = bookViewModel.getBooks();
                 boolean isAnyBookCompleted = books.stream().anyMatch(Book::isCompletedToday);
 
                 runOnUiThread(() -> {
                     Intent intentReadingScheduleActivity;
                     if (bookDBIsEmpty) {
-                        // 데이터베이스가 비어 있는 경우
                         intentReadingScheduleActivity = new Intent(getApplicationContext(), ReadingScheduleActivity1.class);
                     } else if (isAnyBookCompleted) {
-                        // 오늘 목표가 완료된 경우
                         intentReadingScheduleActivity = new Intent(getApplicationContext(), ReadingScheduleActivity3.class);
                     } else {
-                        // 오늘 목표가 완료되지 않은 경우
                         intentReadingScheduleActivity = new Intent(getApplicationContext(), ReadingScheduleActivity2.class);
                     }
                     startActivity(intentReadingScheduleActivity);
@@ -159,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    // 정확한 알람 권한 확인 및 요청
+
     private void requestExactAlarmPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);

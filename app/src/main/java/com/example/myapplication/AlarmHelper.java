@@ -24,12 +24,12 @@ public class AlarmHelper {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
-                9999, // 테스트 알람용 고유 requestCode
+                9999,
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        long triggerTime = System.currentTimeMillis() + 5000; // 현재 시간으로부터 5초 뒤
+        long triggerTime = System.currentTimeMillis() + 5000;
         Log.d("AlarmHelper", "알람이 5초 후에 설정되었습니다.");
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
@@ -41,7 +41,7 @@ public class AlarmHelper {
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra("message", message);
 
-        int requestCode = hour * 100 + minute; // 각 시간마다 고유한 requestCode 설정
+        int requestCode = hour * 100 + minute;
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
                 requestCode,
